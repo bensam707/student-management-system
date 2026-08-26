@@ -304,3 +304,50 @@ a { color: inherit; text-decoration: none; }
     border-color: #6c5ce7;
     box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
 }
+
+/* Department Filter */
+.filter-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0;
+    padding: 14px 18px;
+    width: fit-content;
+    background: #1b1e28;
+    border: 1px solid #303442;
+    border-radius: 10px;
+}
+
+.filter-box label {
+    color: #a9b0cc;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.filter-box select {
+    min-width: 180px;
+    padding: 10px 14px;
+    font-size: 15px;
+    font-family: inherit;
+    color: #ffffff;
+    background: #11131a;
+    border: 1px solid #303442;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-box select:focus {
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+}
+
+.filter-box select:hover {
+    border-color: #6c5ce7;
+}
+
+.filter-box select option {
+    background: #1b1e28;
+    color: #ffffff;
+}

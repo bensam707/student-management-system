@@ -4,6 +4,7 @@
 
 const tbody = document.getElementById("students-tbody");
 const searchInput = document.getElementById("search-input");
+const departmentFilter = document.getElementById("department-filter");
 
 let allStudents = [];
 
@@ -42,16 +43,41 @@ function renderStudents(students) {
     `).join("");
 }
 
-/** Search students */
+/** Load department names into the dropdown */
+function loadDepartments() {
+    const departments = [...new Set(
+        allStudents
+            .map(student => student.department)
+            .filter(Boolean)
+    )];
+
+    departmentFilter.innerHTML = `
+        <option value="">All Departments</option>
+        ${departments.map(department =>
+            `<option value="${department}">${department}</option>`
+        ).join("")}
+    `;
+}
+
+/** Search and filter students */
 function searchStudents() {
     const searchText = searchInput.value.toLowerCase().trim();
+    const selectedDepartment = departmentFilter.value;
 
-    const filteredStudents = allStudents.filter(student =>
-        student.firstName.toLowerCase().includes(searchText) ||
-        student.lastName.toLowerCase().includes(searchText) ||
-        student.email.toLowerCase().includes(searchText) ||
-        (student.department || "").toLowerCase().includes(searchText)
-    );
+    const filteredStudents = allStudents.filter(student => {
+
+        const matchesSearch =
+            student.firstName.toLowerCase().includes(searchText) ||
+            student.lastName.toLowerCase().includes(searchText) ||
+            student.email.toLowerCase().includes(searchText) ||
+            (student.department || "").toLowerCase().includes(searchText);
+
+        const matchesDepartment =
+            !selectedDepartment ||
+            student.department === selectedDepartment;
+
+        return matchesSearch && matchesDepartment;
+    });
 
     renderStudents(filteredStudents);
 }
@@ -82,10 +108,15 @@ async function loadStudents() {
         </tr>`;
 
     allStudents = await API.getAllStudents();
+
+    loadDepartments();
     renderStudents(allStudents);
 }
 
-/** Search whenever the user types */
+/** Search when typing */
 searchInput.addEventListener("input", searchStudents);
+
+/** Filter when department changes */
+departmentFilter.addEventListener("change", searchStudents);
 
 loadStudents();
