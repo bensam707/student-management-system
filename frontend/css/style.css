@@ -274,3 +274,33 @@ a { color: inherit; text-decoration: none; }
     .data-table { font-size: 0.8rem; }
     .data-table th, .data-table td { padding: 0.65rem 0.75rem; }
 }
+
+/* Search Box */
+.search-box {
+    margin: 20px 0;
+    width: 100%;
+}
+
+.search-box input {
+    width: 100%;
+    max-width: 500px;
+    padding: 14px 18px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #ffffff;
+    background: #1b1e28;
+    border: 1px solid #303442;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.search-box input::placeholder {
+    color: #8f96b3;
+}
+
+.search-box input:focus {
+    border-color: #6c5ce7;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+}
