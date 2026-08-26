@@ -1,104 +1,157 @@
 # 🎓 Student Management System
 
-A full-stack web application built with **Java Spring Boot**, **MySQL**, and **HTML/CSS/JavaScript**.
+A simple full-stack web application for managing student records.
 
----
+The system allows users to add, view, edit, and delete student information through a web interface.
+
+## ✨ Features
+
+* Add new students
+* View all students
+* Edit student details
+* Delete students
+* Dashboard with total student count
+* Department count
+* Form validation
+* REST API for student management
+* MySQL database integration
+
+## 🛠️ Technologies Used
+
+| Layer           | Technology                  |
+| --------------- | --------------------------- |
+| Frontend        | HTML5, CSS3, JavaScript     |
+| Backend         | Java 17, Spring Boot        |
+| Database        | MySQL 8                     |
+| ORM             | Spring Data JPA / Hibernate |
+| Build Tool      | Maven                       |
+| Version Control | Git & GitHub                |
 
 ## 📁 Project Structure
 
-```
+```text
 student-management-system/
-├── backend/                        # Spring Boot backend (Java)
+│
+├── backend/
 │   ├── src/
 │   │   └── main/
 │   │       ├── java/com/sms/
-│   │       │   ├── controller/     # REST API endpoints
-│   │       │   ├── service/        # Business logic
-│   │       │   ├── repository/     # Database queries (JPA)
-│   │       │   ├── model/          # Entity classes (DB tables)
-│   │       │   └── StudentManagementApplication.java
+│   │       │   ├── controller/
+│   │       │   ├── service/
+│   │       │   ├── repository/
+│   │       │   └── model/
+│   │       │
 │   │       └── resources/
-│   │           └── application.properties  # DB config, server port
-│   └── pom.xml                     # Maven dependencies
+│   │           └── application.properties
+│   │
+│   ├── pom.xml
+│   ├── mvnw
+│   └── mvnw.cmd
 │
-└── frontend/                       # Vanilla HTML/CSS/JS frontend
-    ├── index.html                  # Landing / dashboard page
-    ├── students.html               # Student list page
-    ├── add-student.html            # Add / edit student form
-    ├── css/
-    │   └── style.css               # Global styles
-    └── js/
-        ├── api.js                  # All fetch() calls to the backend
-        ├── students.js             # Logic for student list page
-        └── form.js                 # Logic for add/edit student form
+├── frontend/
+│   ├── index.html
+│   ├── students.html
+│   ├── add-student.html
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       ├── api.js
+│       ├── students.js
+│       └── form.js
+│
+├── .gitignore
+└── README.md
 ```
 
----
+## 🗄️ Database Setup
 
-## 🛠️ Tech Stack
+Create a MySQL database:
 
-| Layer    | Technology                  |
-|----------|-----------------------------|
-| Backend  | Java 17, Spring Boot 3.x    |
-| Database | MySQL 8.x                   |
-| ORM      | Spring Data JPA (Hibernate) |
-| Frontend | HTML5, CSS3, JavaScript ES6 |
-
----
-
-## 🗓️ 7-Day Plan
-
-| Day | Goal |
-|-----|------|
-| 1   | Project setup & DB connection |
-| 2   | Student model, repository & basic CRUD API |
-| 3   | Service layer + test APIs with Postman |
-| 4   | Frontend dashboard & student list page |
-| 5   | Add / Edit student form (frontend + API wiring) |
-| 6   | Delete student + validation + error handling |
-| 7   | Final polish, README, and demo |
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Java 17+
-- Maven 3.8+
-- MySQL 8+
-- A browser (Chrome, Firefox, etc.)
-
-### 1. Database Setup
 ```sql
 CREATE DATABASE student_management;
 ```
 
-### 2. Configure the Backend
-Edit `backend/src/main/resources/application.properties`:
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/student_management
-spring.datasource.username=YOUR_USERNAME
-spring.datasource.password=YOUR_PASSWORD
+The application uses the following database:
+
+```text
+Database: student_management
+Username: root
 ```
 
-### 3. Run the Backend
-```bash
-cd backend
-mvn spring-boot:run
+Configure your local MySQL password in:
+
+```text
+backend/src/main/resources/application.properties
 ```
-The API will be available at `http://localhost:8080`
 
-### 4. Open the Frontend
-Simply open `frontend/index.html` in your browser.
+**Note:** This file is ignored by Git so that database credentials are not uploaded to the public GitHub repository.
 
----
+## 🚀 How to Run
 
-## 📡 API Endpoints (Planned)
+### 1. Start MySQL
+
+Make sure your MySQL server is running.
+
+### 2. Start the Backend
+
+Open a terminal in the `backend` folder:
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+The backend runs on:
+
+```text
+http://localhost:8080
+```
+
+### 3. Start the Frontend
+
+Open the `frontend` folder using a local web server such as Five Server / Live Server.
+
+Open:
+
+```text
+frontend/index.html
+```
+
+The dashboard will then open in your browser.
+
+## 📡 API Endpoints
 
 | Method | Endpoint             | Description         |
-|--------|----------------------|---------------------|
-| GET    | /api/students        | Get all students    |
-| GET    | /api/students/{id}   | Get student by ID   |
-| POST   | /api/students        | Add new student     |
-| PUT    | /api/students/{id}   | Update student      |
-| DELETE | /api/students/{id}   | Delete student      |
+| ------ | -------------------- | ------------------- |
+| GET    | `/api/students`      | Get all students    |
+| GET    | `/api/students/{id}` | Get a student by ID |
+| POST   | `/api/students`      | Add a new student   |
+| PUT    | `/api/students/{id}` | Update a student    |
+| DELETE | `/api/students/{id}` | Delete a student    |
+
+## 🔄 CRUD Operations
+
+The project demonstrates the four basic database operations:
+
+* **Create** → Add a student
+* **Read** → View students
+* **Update** → Edit student details
+* **Delete** → Remove a student
+
+## 👨‍💻 Project Status
+
+The core Student Management System is complete and the main CRUD operations have been tested successfully.
+
+Future improvements could include:
+
+* Admin login
+* Student search and filtering
+* Attendance management
+* Department-wise reports
+* Export student data
+* Improved dashboard charts
+
+## 📌 Project
+
+**Student Management System**
+
+Built as a 7-day mini project using Java Spring Boot, MySQL, HTML, CSS, JavaScript, Git, and GitHub.
