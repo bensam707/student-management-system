@@ -1,0 +1,22 @@
+# ── Maven ─────────────────────────────────────
+backend/target/
+backend/.mvn/
+
+# ── IntelliJ IDEA ────────────────────────────
+.idea/
+*.iml
+*.iws
+
+# ── VS Code ───────────────────────────────────
+.vscode/
+
+# ── OS Files ──────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Environment / Secrets ────────────────────
+*.env
+
+backend/src/main/resources/application.properties
+
+backend/src/main/resources/application.properties

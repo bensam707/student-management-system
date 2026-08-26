@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMS | Students</title>
+    <meta name="description" content="View and manage all students in the Student Management System." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <!-- ── Navigation ──────────────────────────────────────────────────────── -->
+    <nav class="navbar">
+        <div class="nav-brand">🎓 SMS</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="students.html" class="active">Students</a></li>
+            <li><a href="add-student.html">Add Student</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── Main Content ────────────────────────────────────────────────────── -->
+    <main class="container">
+        <div class="page-header">
+            <h1 class="page-title">All Students</h1>
+            <a href="add-student.html" class="btn btn-primary" id="add-new-btn">+ Add Student</a>
+        </div>
+
+        <!-- Table will be populated by students.js -->
+        <div class="table-wrapper">
+            <table class="data-table" id="students-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th>Year</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="students-tbody">
+                    <!-- Rows inserted by students.js -->
+                    <tr><td colspan="7" class="loading-text">Loading students...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/students.js"></script>
+</body>
+</html>

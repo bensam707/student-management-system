@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SMS | Dashboard</title>
+    <meta name="description" content="Student Management System - Overview dashboard showing key statistics." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <!-- ── Navigation ──────────────────────────────────────────────────────── -->
+    <nav class="navbar">
+        <div class="nav-brand">🎓 SMS</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Dashboard</a></li>
+            <li><a href="students.html">Students</a></li>
+            <li><a href="add-student.html">Add Student</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── Main Content ────────────────────────────────────────────────────── -->
+    <main class="container">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle">Welcome to the Student Management System</p>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-icon">👨‍🎓</span>
+                <h2 class="stat-value" id="total-students">—</h2>
+                <p class="stat-label">Total Students</p>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🏛️</span>
+                <h2 class="stat-value" id="total-departments">—</h2>
+                <p class="stat-label">Departments</p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="action-buttons">
+                <a href="students.html" class="btn btn-primary" id="view-students-btn">View All Students</a>
+                <a href="add-student.html" class="btn btn-secondary" id="add-student-btn">Add New Student</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script>
+        // Load dashboard stats when the page loads
+        async function loadDashboard() {
+            const students = await API.getAllStudents();
+            document.getElementById("total-students").textContent = students.length;
+            const depts = new Set(students.map(s => s.department).filter(Boolean));
+            document.getElementById("total-departments").textContent = depts.size;
+        }
+        loadDashboard();
+    </script>
+</body>
+</html>
