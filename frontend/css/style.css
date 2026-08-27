@@ -415,3 +415,34 @@ a { color: inherit; text-decoration: none; }
 .sort-box select:hover {
     border-color: #6c5ce7;
 }
+/* Form Validation Errors */
+.field-error {
+    display: block;
+    margin-top: 6px;
+    color: #ff6b6b;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 18px;
+}
+
+/* Highlight invalid fields */
+.form-group input:focus:invalid,
+.form-group select:focus:invalid {
+    border-color: #ff6b6b;
+}
+
+/* Error message animation */
+.field-error:not(:empty) {
+    animation: errorFade 0.2s ease-in;
+}
+
+@keyframes errorFade {
+    from {
+        opacity: 0;
+        transform: translateY(-3px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
