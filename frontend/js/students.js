@@ -126,10 +126,7 @@ function updateStudentList() {
             )
         );
 
-    }
-
-
-    else if (sortValue === "name-desc") {
+    } else if (sortValue === "name-desc") {
 
         filteredStudents.sort((a, b) =>
             (b.firstName || "").localeCompare(
@@ -137,10 +134,7 @@ function updateStudentList() {
             )
         );
 
-    }
-
-
-    else if (sortValue === "department") {
+    } else if (sortValue === "department") {
 
         filteredStudents.sort((a, b) =>
             (a.department || "").localeCompare(
@@ -148,24 +142,17 @@ function updateStudentList() {
             )
         );
 
-    }
-
-
-    else if (sortValue === "year-asc") {
+    } else if (sortValue === "year-asc") {
 
         filteredStudents.sort((a, b) =>
             Number(a.year) - Number(b.year)
         );
 
-    }
-
-
-    else if (sortValue === "year-desc") {
+    } else if (sortValue === "year-desc") {
 
         filteredStudents.sort((a, b) =>
             Number(b.year) - Number(a.year)
         );
-
     }
 
 
@@ -203,7 +190,7 @@ async function deleteStudent(id) {
             "Failed to delete student. Please try again."
         );
 
-        console.error(err);
+        console.error("Error deleting student:", err);
     }
 }
 
@@ -214,7 +201,7 @@ async function loadStudents() {
     tbody.innerHTML = `
         <tr>
             <td colspan="7" class="loading-text">
-                Loading...
+                Loading students...
             </td>
         </tr>
     `;
@@ -231,13 +218,25 @@ async function loadStudents() {
 
         tbody.innerHTML = `
             <tr>
-                <td colspan="7" class="loading-text">
-                    Failed to load students.
+                <td colspan="7" class="error-message">
+                    <div>
+                        <strong>Unable to load students</strong>
+
+                        <p>
+                            Please check if the backend server is running.
+                        </p>
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="loadStudents()">
+                            Try Again
+                        </button>
+                    </div>
                 </td>
             </tr>
         `;
 
-        console.error(err);
+        console.error("Error loading students:", err);
     }
 }
 
