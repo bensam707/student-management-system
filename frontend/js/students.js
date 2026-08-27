@@ -5,18 +5,22 @@
 const tbody = document.getElementById("students-tbody");
 const searchInput = document.getElementById("search-input");
 const departmentFilter = document.getElementById("department-filter");
+const sortSelect = document.getElementById("sort-select");
 
 let allStudents = [];
 
+
 /** Render students in the table */
 function renderStudents(students) {
+
     if (students.length === 0) {
         tbody.innerHTML = `
             <tr>
                 <td colspan="7" class="loading-text">
                     No students found.
                 </td>
-            </tr>`;
+            </tr>
+        `;
         return;
     }
 
@@ -28,14 +32,17 @@ function renderStudents(students) {
             <td>${student.email}</td>
             <td>${student.department || "—"}</td>
             <td>${student.year ? student.year + " Year" : "—"}</td>
+
             <td>
-                <button class="btn btn-edit"
-                        onclick="editStudent(${student.id})">
+                <button
+                    class="btn btn-edit"
+                    onclick="editStudent(${student.id})">
                     Edit
                 </button>
 
-                <button class="btn btn-danger"
-                        onclick="deleteStudent(${student.id})">
+                <button
+                    class="btn btn-danger"
+                    onclick="deleteStudent(${student.id})">
                     Delete
                 </button>
             </td>
@@ -43,8 +50,10 @@ function renderStudents(students) {
     `).join("");
 }
 
-/** Load department names into the dropdown */
+
+/** Load department names into dropdown */
 function loadDepartments() {
+
     const departments = [...new Set(
         allStudents
             .map(student => student.department)
@@ -53,70 +62,206 @@ function loadDepartments() {
 
     departmentFilter.innerHTML = `
         <option value="">All Departments</option>
-        ${departments.map(department =>
-            `<option value="${department}">${department}</option>`
-        ).join("")}
+
+        ${departments.map(department => `
+            <option value="${department}">
+                ${department}
+            </option>
+        `).join("")}
     `;
 }
 
-/** Search and filter students */
-function searchStudents() {
-    const searchText = searchInput.value.toLowerCase().trim();
-    const selectedDepartment = departmentFilter.value;
 
-    const filteredStudents = allStudents.filter(student => {
+/** Search, filter and sort students */
+function updateStudentList() {
+
+    const searchText =
+        searchInput.value.toLowerCase().trim();
+
+    const selectedDepartment =
+        departmentFilter.value;
+
+    const sortValue =
+        sortSelect.value;
+
+
+    // 1. Search and department filter
+    let filteredStudents = allStudents.filter(student => {
+
+        const firstName =
+            (student.firstName || "").toLowerCase();
+
+        const lastName =
+            (student.lastName || "").toLowerCase();
+
+        const email =
+            (student.email || "").toLowerCase();
+
+        const department =
+            (student.department || "").toLowerCase();
+
 
         const matchesSearch =
-            student.firstName.toLowerCase().includes(searchText) ||
-            student.lastName.toLowerCase().includes(searchText) ||
-            student.email.toLowerCase().includes(searchText) ||
-            (student.department || "").toLowerCase().includes(searchText);
+            firstName.includes(searchText) ||
+            lastName.includes(searchText) ||
+            email.includes(searchText) ||
+            department.includes(searchText);
+
 
         const matchesDepartment =
             !selectedDepartment ||
             student.department === selectedDepartment;
 
+
         return matchesSearch && matchesDepartment;
     });
 
+
+    // 2. Sort the filtered students
+    if (sortValue === "name-asc") {
+
+        filteredStudents.sort((a, b) =>
+            (a.firstName || "").localeCompare(
+                b.firstName || ""
+            )
+        );
+
+    }
+
+
+    else if (sortValue === "name-desc") {
+
+        filteredStudents.sort((a, b) =>
+            (b.firstName || "").localeCompare(
+                a.firstName || ""
+            )
+        );
+
+    }
+
+
+    else if (sortValue === "department") {
+
+        filteredStudents.sort((a, b) =>
+            (a.department || "").localeCompare(
+                b.department || ""
+            )
+        );
+
+    }
+
+
+    else if (sortValue === "year-asc") {
+
+        filteredStudents.sort((a, b) =>
+            Number(a.year) - Number(b.year)
+        );
+
+    }
+
+
+    else if (sortValue === "year-desc") {
+
+        filteredStudents.sort((a, b) =>
+            Number(b.year) - Number(a.year)
+        );
+
+    }
+
+
+    // 3. Display the final result
     renderStudents(filteredStudents);
 }
 
+
 /** Navigate to edit page */
 function editStudent(id) {
-    window.location.href = `add-student.html?id=${id}`;
+
+    window.location.href =
+        `add-student.html?id=${id}`;
 }
+
 
 /** Delete a student */
 async function deleteStudent(id) {
-    if (!confirm("Are you sure you want to delete this student?")) return;
+
+    if (!confirm(
+        "Are you sure you want to delete this student?"
+    )) {
+        return;
+    }
 
     try {
+
         await API.deleteStudent(id);
-        loadStudents();
+
+        await loadStudents();
+
     } catch (err) {
-        alert("Failed to delete student. Please try again.");
+
+        alert(
+            "Failed to delete student. Please try again."
+        );
+
         console.error(err);
     }
 }
 
+
 /** Load students */
 async function loadStudents() {
+
     tbody.innerHTML = `
         <tr>
-            <td colspan="7" class="loading-text">Loading...</td>
-        </tr>`;
+            <td colspan="7" class="loading-text">
+                Loading...
+            </td>
+        </tr>
+    `;
 
-    allStudents = await API.getAllStudents();
+    try {
 
-    loadDepartments();
-    renderStudents(allStudents);
+        allStudents = await API.getAllStudents();
+
+        loadDepartments();
+
+        updateStudentList();
+
+    } catch (err) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="loading-text">
+                    Failed to load students.
+                </td>
+            </tr>
+        `;
+
+        console.error(err);
+    }
 }
 
+
 /** Search when typing */
-searchInput.addEventListener("input", searchStudents);
+searchInput.addEventListener(
+    "input",
+    updateStudentList
+);
+
 
 /** Filter when department changes */
-departmentFilter.addEventListener("change", searchStudents);
+departmentFilter.addEventListener(
+    "change",
+    updateStudentList
+);
 
+
+/** Sort when selection changes */
+sortSelect.addEventListener(
+    "change",
+    updateStudentList
+);
+
+
+/** Start loading students */
 loadStudents();
