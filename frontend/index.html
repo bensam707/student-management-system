@@ -44,10 +44,16 @@
                 <h2 class="stat-value" id="top-department">—</h2>
                 <p class="stat-label">Top Department</p>
             </div>
-
         </div>
 
-        
+        <!-- Students by Department -->
+        <div class="department-summary">
+            <h2 class="section-title">Students by Department</h2>
+            <div id="department-list">
+        <p>Loading...</p>
+    </div>
+</div>
+
 
         <!-- Quick Actions -->
         <div class="quick-actions">
@@ -95,8 +101,23 @@
     }
 
     document.getElementById("top-department").textContent = topDepartment;
+    // Show students count for each department
+const departmentList = document.getElementById("department-list");
+
+if (Object.keys(departmentCounts).length === 0) {
+    departmentList.innerHTML = "<p>No department data available.</p>";
+} else {
+    departmentList.innerHTML = Object.entries(departmentCounts)
+        .map(([department, count]) => `
+            <div class="department-item">
+                <span>${department}</span>
+                <strong>${count} student${count !== 1 ? "s" : ""}</strong>
+            </div>
+        `)
+        .join("");
 }
-        loadDashboard();
+}
+      loadDashboard();
     </script>
 </body>
 </html>
