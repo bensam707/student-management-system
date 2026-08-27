@@ -34,11 +34,20 @@
                 <p class="stat-label">Total Students</p>
             </div>
             <div class="stat-card">
-                <span class="stat-icon">🏛️</span>
+                <span class="stat-icon">🏛️</span>   
                 <h2 class="stat-value" id="total-departments">—</h2>
                 <p class="stat-label">Departments</p>
             </div>
+
+            <div class="stat-card">
+                <span class="stat-icon">📚</span>
+                <h2 class="stat-value" id="top-department">—</h2>
+                <p class="stat-label">Top Department</p>
+            </div>
+
         </div>
+
+        
 
         <!-- Quick Actions -->
         <div class="quick-actions">
@@ -55,10 +64,38 @@
         // Load dashboard stats when the page loads
         async function loadDashboard() {
             const students = await API.getAllStudents();
+
+            // Total students
             document.getElementById("total-students").textContent = students.length;
-            const depts = new Set(students.map(s => s.department).filter(Boolean));
-            document.getElementById("total-departments").textContent = depts.size;
+
+    // Total departments
+        const depts = new Set(
+        students.map(s => s.department).filter(Boolean)
+    );
+    document.getElementById("total-departments").textContent = depts.size;
+
+    // Find the department with the most students
+    const departmentCounts = {};
+
+    students.forEach(student => {
+        if (student.department) {
+            departmentCounts[student.department] =
+                (departmentCounts[student.department] || 0) + 1;
         }
+    });
+
+    let topDepartment = "—";
+    let highestCount = 0;
+
+    for (const department in departmentCounts) {
+        if (departmentCounts[department] > highestCount) {
+            highestCount = departmentCounts[department];
+            topDepartment = department;
+        }
+    }
+
+    document.getElementById("top-department").textContent = topDepartment;
+}
         loadDashboard();
     </script>
 </body>
