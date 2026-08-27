@@ -1,9 +1,8 @@
 /**
- * student-details.js
- * Loads and displays a single student's details.
+ * student-details.js - Logic for Student Details page
  */
 
-// Get the student ID from the URL
+// Get student ID from URL
 const params = new URLSearchParams(window.location.search);
 const studentId = params.get("id");
 
@@ -15,7 +14,9 @@ const lastName = document.getElementById("last-name");
 const email = document.getElementById("email");
 const department = document.getElementById("department");
 const year = document.getElementById("year");
+
 const editBtn = document.getElementById("edit-btn");
+const deleteBtn = document.getElementById("delete-btn");
 
 
 /** Load student details */
@@ -23,18 +24,18 @@ async function loadStudentDetails() {
 
     // Check if student ID exists
     if (!studentId) {
-        showError("Student ID was not provided.");
+        alert("Student ID not found.");
+        window.location.href = "students.html";
         return;
     }
 
     try {
 
-        // Get student from backend
         const student = await API.getStudentById(studentId);
 
         // Display student information
         studentName.textContent =
-            `${student.firstName || ""} ${student.lastName || ""}`.trim();
+            `${student.firstName} ${student.lastName}`;
 
         studentIdElement.textContent =
             `Student ID: ${student.id}`;
@@ -56,42 +57,55 @@ async function loadStudentDetails() {
                 ? `${student.year} Year`
                 : "—";
 
-        // Set edit button link
-        editBtn.onclick = function () {
-            window.location.href =
-                `add-student.html?id=${student.id}`;
-        };
-
     } catch (err) {
 
-        console.error(
-            "Error loading student details:",
-            err
-        );
+        console.error("Error loading student:", err);
 
-        showError(
-            "Unable to load student details. Please try again."
-        );
+        alert("Could not load student details.");
+
+        window.location.href = "students.html";
     }
 }
 
 
-/** Display an error message */
-function showError(message) {
+/** Edit student */
+editBtn.addEventListener("click", function () {
 
-    studentName.textContent = "Unable to load";
+    window.location.href =
+        `add-student.html?id=${studentId}`;
 
-    studentIdElement.textContent = "";
-
-    firstName.textContent = "—";
-    lastName.textContent = "—";
-    email.textContent = "—";
-    department.textContent = "—";
-    year.textContent = "—";
-
-    alert(message);
-}
+});
 
 
-/** Start loading student details */
+/** Delete student */
+deleteBtn.addEventListener("click", async function () {
+
+    const confirmDelete = confirm(
+        "Are you sure you want to delete this student?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    try {
+
+        await API.deleteStudent(studentId);
+
+        alert("Student deleted successfully.");
+
+        window.location.href = "students.html";
+
+    } catch (err) {
+
+        console.error("Error deleting student:", err);
+
+        alert(
+            "Failed to delete student. Please try again."
+        );
+    }
+});
+
+
+/** Load the student when page opens */
 loadStudentDetails();
