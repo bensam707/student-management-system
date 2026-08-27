@@ -35,6 +35,12 @@ function renderStudents(students) {
 
             <td>
                 <button
+                    class="btn btn-view"
+                    onclick="viewStudent(${student.id})">
+                    View
+                </button>
+
+                <button
                     class="btn btn-edit"
                     onclick="editStudent(${student.id})">
                     Edit
@@ -145,19 +151,27 @@ function updateStudentList() {
     } else if (sortValue === "year-asc") {
 
         filteredStudents.sort((a, b) =>
-            Number(a.year) - Number(b.year)
+            Number(a.year || 0) - Number(b.year || 0)
         );
 
     } else if (sortValue === "year-desc") {
 
         filteredStudents.sort((a, b) =>
-            Number(b.year) - Number(a.year)
+            Number(b.year || 0) - Number(a.year || 0)
         );
     }
 
 
     // 3. Display the final result
     renderStudents(filteredStudents);
+}
+
+
+/** Navigate to student details page */
+function viewStudent(id) {
+
+    window.location.href =
+        `student-details.html?id=${id}`;
 }
 
 

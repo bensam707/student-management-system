@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>SMS | Student Details</title>
+
+    <meta
+        name="description"
+        content="View student details in the Student Management System."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="nav-brand">
+            🎓 SMS
+        </div>
+
+        <ul class="nav-links">
+            <li>
+                <a href="index.html">
+                    Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="students.html" class="active">
+                    Students
+                </a>
+            </li>
+
+            <li>
+                <a href="add-student.html">
+                    Add Student
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="container">
+
+        <div class="page-header">
+
+            <h1 class="page-title">
+                Student Details
+            </h1>
+
+            <a
+                href="students.html"
+                class="btn btn-secondary"
+            >
+                ← Back to Students
+            </a>
+
+        </div>
+
+
+        <!-- Student Details Card -->
+        <div class="student-details-card">
+
+            <div class="student-details-header">
+
+                <div class="student-avatar">
+                    👤
+                </div>
+
+                <div>
+                    <h2 id="student-name">
+                        Loading...
+                    </h2>
+
+                    <p id="student-id">
+                        Student ID: —
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="student-details">
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        First Name
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="first-name"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Last Name
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="last-name"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Email
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="email"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Department
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="department"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-item">
+
+                    <span class="detail-label">
+                        Year of Study
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="year"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Actions -->
+            <div class="detail-actions">
+
+                <a
+                    href="students.html"
+                    class="btn btn-secondary"
+                >
+                    ← Back
+                </a>
+
+                <button
+                    class="btn btn-edit"
+                    id="edit-btn"
+                >
+                    Edit Student
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script src="js/api.js"></script>
+    <script src="js/student-details.js"></script>
+
+</body>
+</html>
