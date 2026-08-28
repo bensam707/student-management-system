@@ -143,8 +143,7 @@ The core Student Management System is complete and the main CRUD operations have
 
 Future improvements could include:
 
-* Admin login
-* Student search and filtering
+* Admin login and authentication
 * Attendance management
 * Department-wise reports
 * Export student data
