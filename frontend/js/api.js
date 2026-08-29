@@ -8,7 +8,7 @@
  * Base URL points to the Spring Boot server running on port 8080.
  */
 
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = "https://student-management-system-production-fcd5.up.railway.app/api";
 
 const API = {
 
